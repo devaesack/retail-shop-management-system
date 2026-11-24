@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="card p-4">
+
+<h2>🧾 Point Of Sale</h2>
+
+<hr>
+
+<form method="POST">
+
+<div class="mb-3">
+
+<label>Select Product</label>
+
+<select
+name="product_id"
+class="form-select">
+
+{% for product in products %}
+
+<option value="{{ product[0] }}">
+{{ product[1] }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="mb-3">
+
+<label>Quantity</label>
+
+<input
+type="number"
+name="quantity"
+class="form-control"
+min="1"
+required>
+
+</div>
+
+<button
+class="btn btn-success">
+
+Generate Bill
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+{% endblock %}

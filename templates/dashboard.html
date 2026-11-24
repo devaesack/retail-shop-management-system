@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<a href="/dashboard" class="active"></a>
+
+<h5 class="text-secondary">
+
+Welcome,
+{{ session['user'] }} 👋
+
+</h5>
+
+<br>
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="card bg-primary text-white">
+
+<div class="card-body">
+
+<h5>Total Products</h5>
+
+<h2>{{ total_products }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-success text-white">
+
+<div class="card-body">
+
+<h5>Total Stock</h5>
+
+<h2>{{ total_stock }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-danger text-white">
+
+<div class="card-body">
+
+<h5>Low Stock</h5>
+
+<h2>{{ low_stock }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3 mt-3">
+
+    <div class="card bg-warning">
+
+        <div class="card-body">
+
+            <h5>Total Sales</h5>
+
+            <h2>{{ total_sales }}</h2>
+
+        </div>
+
+    </div>
+
+</div>
+
+<br><br>
+
+<div class="card">
+
+    <div class="card-header bg-danger text-white">
+
+        Low Stock Alerts
+
+    </div>
+
+    <div class="card-body">
+
+        {% for item in low_stock_products %}
+
+            <p>
+
+                ⚠ {{ item[0] }}
+                (Stock: {{ item[1] }})
+
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
