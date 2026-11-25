@@ -64,6 +64,20 @@ def dashboard():
     """)
 
     total_sales = cur.fetchone()[0]
+    cur.execute("""
+    SELECT COALESCE(SUM(total_amount),0)
+    FROM sales
+    """)
+
+    total_revenue = cur.fetchone()[0]
+
+    cur.execute("""
+    SELECT COUNT(*)
+    FROM sales
+    WHERE DATE(sale_date)=CURRENT_DATE
+    """)
+
+    today_sales = cur.fetchone()[0]
     
     # Total Products
     cur.execute("SELECT COUNT(*) FROM products")
@@ -85,6 +99,25 @@ def dashboard():
 
     low_stock_products = cur.fetchall()
 
+    cur.execute("""
+    SELECT
+    p.product_name,
+    SUM(s.quantity) AS total_qty
+
+    FROM sales s
+
+    JOIN products p
+    ON s.product_id = p.id
+
+   GROUP BY p.product_name
+
+   ORDER BY total_qty DESC
+
+   LIMIT 1
+   """)
+
+    top_product = cur.fetchone()
+
     cur.close()
     conn.close()
 
@@ -94,7 +127,10 @@ def dashboard():
         total_stock=total_stock,
         low_stock=low_stock,
         total_sales=total_sales,
-        low_stock_products=low_stock_products
+        low_stock_products=low_stock_products,
+        total_revenue=total_revenue,
+        today_sales=today_sales,
+        top_product=top_product
     )
 @app.route('/products')
 def products():
