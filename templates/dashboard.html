@@ -31,121 +31,80 @@
     </div>
 
     <div class="col-lg-3 col-md-6">
-        <div class="card bg-danger text-white shadow">
+        <div class="card bg-danger text-white">
+
             <div class="card-body">
+
                 <h5>Low Stock</h5>
+
                 <h2>{{ low_stock }}</h2>
-            </div>
-        </div>
-    </div>
 
-    <div class="col-lg-3 col-md-6">
-        <div class="card bg-warning shadow">
-            <div class="card-body">
-                <h5>Total Sales</h5>
-                <h2>{{ total_sales }}</h2>
-            </div>
-        </div>
-    </div>
+                <a href="/low_stock" class="btn btn-light btn-sm mt-2">
 
-</div>
+                    View Details
 
-<!-- Row 2 -->
-
-<div class="row g-3 mt-2">
-
-    <div class="col-lg-4 col-md-6">
-        <div class="card bg-success text-white shadow">
-            <div class="card-body">
-                <h5>Total Revenue</h5>
-                <h2>₹{{ total_revenue }}</h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6">
-        <div class="card bg-info text-white shadow">
-            <div class="card-body">
-                <h5>Today's Sales</h5>
-                <h2>{{ today_sales }}</h2>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 col-md-12">
-        <div class="card bg-dark text-white shadow">
-            <div class="card-body">
-                <h5>🏆 Top Product</h5>
-                <h3>{{ top_product[0] }}</h3>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-<!-- Recent Sales Toggle -->
-
-<div class="card mt-4 shadow">
-
-    <div class="card-header bg-primary text-white">
-
-        Recent Sales
-
-        <button
-            class="btn btn-sm btn-light float-end"
-            data-bs-toggle="collapse"
-            data-bs-target="#recentSales">
-
-            Show / Hide
-
-        </button>
-
-    </div>
-
-    <div id="recentSales" class="collapse">
-
-        <div class="card-body">
-
-            <div class="table-responsive">
-
-                <table class="table table-striped">
-
-                    <thead>
-
-                        <tr>
-                            <th>Customer</th>
-                            <th>Product</th>
-                            <th>Amount</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        {% for sale in recent_sales %}
-
-                        <tr>
-
-                            <td>{{ sale[0] }}</td>
-
-                            <td>{{ sale[1] }}</td>
-
-                            <td>₹{{ sale[2] }}</td>
-
-                        </tr>
-
-                        {% endfor %}
-
-                    </tbody>
-
-                </table>
+                </a>
 
             </div>
 
         </div>
 
+        <div class="col-lg-3 col-md-6">
+            <div class="card bg-warning shadow">
+                <div class="card-body">
+                    <h5>Total Sales</h5>
+                    <h2>{{ total_sales }}</h2>
+                    <a href="/sales_history" class="btn btn-dark btn-sm mt-2">
+
+                        View Sales
+
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-</div>
+    <!-- Row 2 -->
 
-{% endblock %}
+    <div class="row g-3 mt-2">
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card bg-success text-white shadow">
+                <div class="card-body">
+                    <h5>Total Revenue</h5>
+                    <h2>₹{{ total_revenue }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card bg-info text-white shadow">
+                <div class="card-body">
+                    <h5>Today's Sales</h5>
+                    <h2>{{ today_sales }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-12">
+            <div class="card bg-dark text-white shadow">
+                <div class="card-body">
+                    <h5>🏆 Top Product</h5>
+                    <h3>{{ top_product[0] }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Sales Toggle -->
+
+    
+           
+
+        
+
+   
+
+    {% endblock %}
