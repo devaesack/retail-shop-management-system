@@ -93,7 +93,7 @@ def dashboard():
     cur.execute("""
         SELECT product_name, stock
         FROM products
-        WHERE stock < 50
+        WHERE stock <= 50
         ORDER BY stock
         """)
 
@@ -118,6 +118,24 @@ def dashboard():
 
     top_product = cur.fetchone()
 
+    cur.execute("""
+    SELECT
+    customer_name,
+    p.product_name,
+    s.total_amount
+
+    FROM sales s
+
+    JOIN products p
+    ON s.product_id = p.id
+
+    ORDER BY s.id DESC
+
+    LIMIT 5
+    """)
+
+    recent_sales = cur.fetchall()
+
     cur.close()
     conn.close()
 
@@ -130,7 +148,8 @@ def dashboard():
         low_stock_products=low_stock_products,
         total_revenue=total_revenue,
         today_sales=today_sales,
-        top_product=top_product
+        top_product=top_product,
+        recent_sales=recent_sales
     )
 @app.route('/products')
 def products():

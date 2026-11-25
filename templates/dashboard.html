@@ -90,6 +90,58 @@ Welcome,
     </div>
 
 </div>
+
+<div class="card mt-4">
+
+    <div class="card-header bg-primary text-white">
+
+        Recent Sales
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Amount</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for sale in recent_sales %}
+
+                <tr>
+
+                    <td>{{ sale[0] }}</td>
+
+                    <td>{{ sale[1] }}</td>
+
+                    <td>
+
+                        ₹{{ sale[2] }}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
    <!-- Low Stock Alerts -->
 
 <div class="card mt-4">
