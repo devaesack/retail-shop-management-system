@@ -242,15 +242,16 @@ def billing():
 
         # Get product details
         cur.execute("""
-            SELECT price, stock
+            SELECT product_name, price, stock
             FROM products
             WHERE id = %s
         """, (product_id,))
 
         product = cur.fetchone()
 
-        price = product[0]
-        stock = product[1]
+        product_name = product[0]
+        price = product[1]
+        stock = product[2]
 
         # Check stock
         if quantity > stock:
@@ -288,7 +289,13 @@ def billing():
         cur.close()
         conn.close()
 
-        return redirect('/sales_history')
+        return render_template(
+             'bill_success.html',
+             customer_name=customer_name,
+             product_name=product_name,
+             quantity=quantity,
+             total_amount=total_amount
+)
 
     # Load products
     cur.execute("""
