@@ -81,33 +81,6 @@ Welcome,
 
 </div>
 
-<br><br>
-
-<div class="card">
-
-    <div class="card-header bg-danger text-white">
-
-        Low Stock Alerts
-
-    </div>
-
-    <div class="card-body">
-
-        {% for item in low_stock_products %}
-
-            <p>
-
-                ⚠ {{ item[0] }}
-                (Stock: {{ item[1] }})
-
-            </p>
-
-        {% endfor %}
-
-    </div>
-
-</div>
-
 <div class="col-lg-3 col-md-6 col-sm-12">
 
     <div class="card bg-success text-white">
@@ -127,6 +100,7 @@ Welcome,
     </div>
 
 </div>
+
 
 <div class="card">
 
@@ -155,6 +129,36 @@ Welcome,
     </div>
 
 </div>
+
+<br><br>
+
+<div class="card">
+
+    <div class="card-header bg-danger text-white">
+
+        Low Stock Alerts
+
+    </div>
+
+    <div class="card-body">
+
+        {% for item in low_stock_products %}
+
+            <p>
+
+                ⚠ {{ item[0] }}
+                (Stock: {{ item[1] }})
+
+            </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+
 
 
 {% endblock %}
