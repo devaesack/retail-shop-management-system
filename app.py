@@ -337,7 +337,8 @@ def sales_history():
                 sale[1],
                 sale[2],
                 sale[3],
-                (sale[4] +timedelta(hours=5, minutes=30))
+                sale[4],
+                (sale[5] +timedelta(hours=5, minutes=30))
                 .strftime('%d-%m-%Y %I:%M %p')
             )
         )
