@@ -7,6 +7,7 @@ from flask import (
     session
 )
 from db import get_connection
+from datetime import timedelta
 
 from flask import Flask, render_template
 
@@ -325,7 +326,8 @@ def sales_history():
                 sale[1],
                 sale[2],
                 sale[3],
-                sale[4].strftime('%d %b %Y, %I:%M %p')
+                (sale[4] +timedelta(hours=5, minutes=30))
+                .strftime('%d-%m-%Y %I:%M %p')
             )
         )
 
