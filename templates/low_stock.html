@@ -2,39 +2,170 @@
 
 {% block content %}
 
-<h2>⚠ Low Stock Products</h2>
+<style>
+    .low-stock-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 1.5rem;
+    }
+    .low-stock-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 0;
+    }
+    .caution-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: #fef3c7;
+        color: #d97706;
+        font-size: 1.3rem;
+    }
+    .alert-count {
+        background: #fee2e2;
+        color: #b91c1c;
+        font-weight: 600;
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.9rem;
+    }
+    .stock-card {
+        background: #fff;
+        border: none;
+        border-radius: 14px;
+        overflow: hidden;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
+    .stock-table {
+        margin: 0;
+    }
+    .stock-table thead th {
+        background: #111827;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        padding: 14px 18px;
+        border: none;
+    }
+    .stock-table tbody td {
+        padding: 14px 18px;
+        vertical-align: middle;
+        border-color: #f1f5f9;
+    }
+    .stock-table tbody tr:hover {
+        background: #fffbeb;
+    }
+    .product-name {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+        color: #1f2937;
+    }
+    .product-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #f59e0b;
+    }
+    .stock-qty {
+        font-weight: 700;
+        font-size: 1.05rem;
+    }
+    .badge-critical {
+        background: #fee2e2;
+        color: #b91c1c;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .badge-low {
+        background: #fef3c7;
+        color: #b45309;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 48px 20px;
+        color: #6b7280;
+    }
+    .empty-state .check {
+        font-size: 2.5rem;
+        color: #16a34a;
+    }
+</style>
 
-<br>
+<!-- Header -->
+<div class="low-stock-header">
+    <div class="d-flex align-items-center gap-3">
+        <span class="caution-icon">⚠️</span>
+        <div>
+            <h4 class="low-stock-title">Low Stock Products</h4>
+            <small class="text-muted">Items that need to be restocked soon</small>
+        </div>
+    </div>
+    <span class="alert-count">{{ products|length }} item{{ 's' if products|length != 1 }} need restocking</span>
+</div>
 
-<table class="table table-bordered">
+<!-- Table Card -->
+<div class="card stock-card">
+    <div class="table-responsive">
+        <table class="table stock-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th class="text-center">Stock</th>
+                    <th class="text-center">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>
+                        <div class="product-name">
+                            <span class="product-dot"></span>
+                            {{ product[0] }}
+                        </div>
+                    </td>
+                    <td class="text-center stock-qty">{{ product[1] }}</td>
+                    <td class="text-center">
+                        {% if product[1]|int <= 10 %}
+                            <span class="badge-critical">Critical</span>
+                        {% else %}
+                            <span class="badge-low">Low</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="3">
+                        <div class="empty-state">
+                            <div class="check">✅</div>
+                            <p class="mb-0 mt-2">All products are well stocked.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-    <thead>
-
-        <tr>
-
-            <th>Product</th>
-            <th>Stock</th>
-
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-        {% for product in products %}
-
-        <tr>
-
-            <td>{{ product[0] }}</td>
-
-            <td>{{ product[1] }}</td>
-
-        </tr>
-
-        {% endfor %}
-
-    </tbody>
-
-</table>
+<p class="text-center text-muted small mt-4 mb-0">Retail Shop Management System © 2026</p>
 
 {% endblock %}

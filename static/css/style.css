@@ -276,15 +276,7 @@ label{
     box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
-.dashboard-card{
-    cursor:pointer;
-    transition:0.3s;
-}
 
-.dashboard-card:hover{
-    transform:translateY(-5px);
-    box-shadow:0 5px 15px rgba(0,0,0,0.3);
-}
 
 /* =========================
    RESPONSIVE
