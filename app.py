@@ -238,6 +238,7 @@ def billing():
 
         product_id = request.form['product_id']
         quantity = int(request.form['quantity'])
+        customer_name = request.form['customer_name']
 
         # Get product details
         cur.execute("""
@@ -260,10 +261,19 @@ def billing():
         # Save sale
         cur.execute("""
             INSERT INTO sales
-            (product_id, quantity, total_amount)
-            VALUES (%s,%s,%s)
+            (customer_name,
+            product_id,
+            quantity,
+            total_amount)
+
+            VALUES (%s,%s,%s,%s)
         """,
-        (product_id, quantity, total_amount))
+           (
+            customer_name,
+            product_id,
+            quantity,
+            total_amount
+                           ))
 
         # Reduce stock
         cur.execute("""
@@ -303,7 +313,8 @@ def sales_history():
     cur = conn.cursor()
 
     cur.execute("""
-        SELECT s.id,
+                SELECT s.id,
+                s.customer_name,
                p.product_name,
                s.quantity,
                s.total_amount,

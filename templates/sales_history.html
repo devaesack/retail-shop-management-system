@@ -18,6 +18,7 @@ class="table table-bordered table-striped table-hover">
 <th>Quantity</th>
 <th>Total Amount</th>
 <th>Date</th>
+<th>Customer</th>
 
 </tr>
 
@@ -28,7 +29,7 @@ class="table table-bordered table-striped table-hover">
 {% for sale in sales %}
 
 <tr>
-
+<td>{{ sale[1] }}</td>
 <td>{{ sale[0] }}</td>
 <td>{{ sale[1] }}</td>
 <td>{{ sale[2] }}</td>
