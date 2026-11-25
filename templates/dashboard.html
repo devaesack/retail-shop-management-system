@@ -2,22 +2,18 @@
 
 {% block content %}
 
-<a href="/dashboard" class="active"></a>
-
 <h5 class="text-secondary">
-
-Welcome,
-{{ session['user'] }} 👋
-
+    Welcome, {{ session['user'] }} 👋
 </h5>
 
 <br>
 
-<div class="row">
+<!-- Row 1 -->
 
-    <!-- Total Products -->
+<div class="row g-3">
+
     <div class="col-lg-3 col-md-6">
-        <div class="card bg-primary text-white">
+        <div class="card bg-primary text-white shadow">
             <div class="card-body">
                 <h5>Total Products</h5>
                 <h2>{{ total_products }}</h2>
@@ -25,9 +21,8 @@ Welcome,
         </div>
     </div>
 
-    <!-- Total Stock -->
     <div class="col-lg-3 col-md-6">
-        <div class="card bg-success text-white">
+        <div class="card bg-success text-white shadow">
             <div class="card-body">
                 <h5>Total Stock</h5>
                 <h2>{{ total_stock }}</h2>
@@ -35,11 +30,17 @@ Welcome,
         </div>
     </div>
 
-    
-
-    <!-- Total Sales -->
     <div class="col-lg-3 col-md-6">
-        <div class="card bg-warning">
+        <div class="card bg-danger text-white shadow">
+            <div class="card-body">
+                <h5>Low Stock</h5>
+                <h2>{{ low_stock }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+        <div class="card bg-warning shadow">
             <div class="card-body">
                 <h5>Total Sales</h5>
                 <h2>{{ total_sales }}</h2>
@@ -49,11 +50,12 @@ Welcome,
 
 </div>
 
-<div class="row mt-3">
+<!-- Row 2 -->
 
-    <!-- Revenue -->
+<div class="row g-3 mt-2">
+
     <div class="col-lg-4 col-md-6">
-        <div class="card bg-success text-white">
+        <div class="card bg-success text-white shadow">
             <div class="card-body">
                 <h5>Total Revenue</h5>
                 <h2>₹{{ total_revenue }}</h2>
@@ -61,9 +63,8 @@ Welcome,
         </div>
     </div>
 
-    <!-- Today's Sales -->
     <div class="col-lg-4 col-md-6">
-        <div class="card bg-info text-white">
+        <div class="card bg-info text-white shadow">
             <div class="card-body">
                 <h5>Today's Sales</h5>
                 <h2>{{ today_sales }}</h2>
@@ -71,9 +72,8 @@ Welcome,
         </div>
     </div>
 
-    <!-- Top Product -->
-    <div class="col-lg-4 col-md-6">
-        <div class="card bg-dark text-white">
+    <div class="col-lg-4 col-md-12">
+        <div class="card bg-dark text-white shadow">
             <div class="card-body">
                 <h5>🏆 Top Product</h5>
                 <h3>{{ top_product[0] }}</h3>
@@ -83,70 +83,69 @@ Welcome,
 
 </div>
 
-<div class="card mt-4">
+<!-- Recent Sales Toggle -->
+
+<div class="card mt-4 shadow">
 
     <div class="card-header bg-primary text-white">
 
-    Recent Sales
+        Recent Sales
 
-    <button
-        class="btn btn-sm btn-light float-end"
-        data-bs-toggle="collapse"
-        data-bs-target="#recentSales">
+        <button
+            class="btn btn-sm btn-light float-end"
+            data-bs-toggle="collapse"
+            data-bs-target="#recentSales">
 
-        Show / Hide
+            Show / Hide
 
-    </button>
+        </button>
 
-</div>
-     <div class="collapse" id="recentSales">
-    <div class="card-body">
+    </div>
 
-        <table class="table">
+    <div id="recentSales" class="collapse">
 
-            <thead>
+        <div class="card-body">
 
-                <tr>
+            <div class="table-responsive">
 
-                    <th>Customer</th>
-                    <th>Product</th>
-                    <th>Amount</th>
+                <table class="table table-striped">
 
-                </tr>
+                    <thead>
 
-            </thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Amount</th>
+                        </tr>
 
-            <tbody>
+                    </thead>
 
-                {% for sale in recent_sales %}
+                    <tbody>
 
-                <tr>
+                        {% for sale in recent_sales %}
 
-                    <td>{{ sale[0] }}</td>
+                        <tr>
 
-                    <td>{{ sale[1] }}</td>
+                            <td>{{ sale[0] }}</td>
 
-                    <td>
+                            <td>{{ sale[1] }}</td>
 
-                        ₹{{ sale[2] }}
+                            <td>₹{{ sale[2] }}</td>
 
-                    </td>
+                        </tr>
 
-                </tr>
+                        {% endfor %}
 
-                {% endfor %}
+                    </tbody>
 
-            </tbody>
+                </table>
 
-        </table>
-      </div>
+            </div>
+
+        </div>
+
     </div>
 
 </div>
-   
-
-
-
-
 
 {% endblock %}
