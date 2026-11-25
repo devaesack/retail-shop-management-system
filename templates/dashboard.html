@@ -35,15 +35,28 @@ Welcome,
         </div>
     </div>
 
-    <!-- Low Stock -->
+    <!-- low stock -->
+
     <div class="col-lg-3 col-md-6">
+
+    <a href="/low_stock"
+       style="text-decoration:none;">
+
         <div class="card bg-danger text-white">
+
             <div class="card-body">
+
                 <h5>Low Stock</h5>
+
                 <h2>{{ low_stock }}</h2>
+
             </div>
+
         </div>
-    </div>
+
+    </a>
+
+</div>
 
     <!-- Total Sales -->
     <div class="col-lg-3 col-md-6">
@@ -142,57 +155,7 @@ Welcome,
     </div>
 
 </div>
-   <!-- Low Stock Alerts -->
-
-<div class="card mt-4">
-
-    <div class="card-header bg-danger text-white">
-
-        <h5 class="mb-0">
-            ⚠ Low Stock Alerts
-        </h5>
-
-    </div>
-
-    <div class="card-body">
-
-        {% if low_stock_products %}
-
-            <ul class="list-group list-group-flush">
-
-                {% for item in low_stock_products %}
-
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                    <strong>
-                        {{ item[0] }}
-                    </strong>
-
-                    <span class="badge bg-danger">
-
-                        Stock: {{ item[1] }}
-
-                    </span>
-
-                </li>
-
-                {% endfor %}
-
-            </ul>
-
-        {% else %}
-
-            <div class="alert alert-success mb-0">
-
-                ✅ No low stock products.
-
-            </div>
-
-        {% endif %}
-
-    </div>
-
-</div>
+   
 
 
 

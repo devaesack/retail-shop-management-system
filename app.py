@@ -419,6 +419,30 @@ def logout():
 
     return redirect('/')
 
+@app.route('/low_stock')
+def low_stock():
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT product_name,
+               stock
+        FROM products
+        WHERE stock <= 50
+        ORDER BY stock ASC
+    """)
+
+    products = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return render_template(
+        'low_stock.html',
+        products=products
+    )
+
 
 if __name__ == '__main__':
     app.run(debug=True)

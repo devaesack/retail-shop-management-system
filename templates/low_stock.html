@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>⚠ Low Stock Products</h2>
+
+<br>
+
+<table class="table table-bordered">
+
+    <thead>
+
+        <tr>
+
+            <th>Product</th>
+            <th>Stock</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for product in products %}
+
+        <tr>
+
+            <td>{{ product[0] }}</td>
+
+            <td>{{ product[1] }}</td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}
