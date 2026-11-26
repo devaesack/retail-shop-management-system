@@ -504,7 +504,7 @@ def restock(id):
         return redirect('/low_stock')
 
     cur.execute("""
-        SELECT product_name, stock
+        SELECT id, product_name, stock
         FROM products
         WHERE id=%s
     """,

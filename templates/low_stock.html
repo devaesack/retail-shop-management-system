@@ -179,12 +179,12 @@
                     <td>
                         <div class="product-name">
                             <span class="product-dot"></span>
-                            {{ product[0] }}
+                            {{ product[1] }}
                         </div>
                     </td>
-                    <td class="text-center stock-qty">{{ product[1] }}</td>
+                    <td class="text-center stock-qty">{{ product[2] }}</td>
                     <td class="text-center">
-                        {% if product[1]|int <= 10 %}
+                        {% if product[2]|int <= 10 %}
                             <span class="badge-critical">Critical</span>
                         {% else %}
                             <span class="badge-low">Low</span>
@@ -193,7 +193,7 @@
                     <td class="text-center">
 
                     <a
-                     href="/restock/{{ product[2] }}"
+                     href="/restock/{{ product[0] }}"
                      class="btn btn-success btn-sm">
 
                      Restock
