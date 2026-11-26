@@ -483,6 +483,7 @@ def restock(id):
     if request.method == 'POST':
 
         quantity = int(request.form['quantity'])
+        print("RESTOCK QTY =", quantity)
 
         cur.execute("""
             UPDATE products
@@ -490,8 +491,17 @@ def restock(id):
             WHERE id = %s
         """,
         (quantity, id))
+        print("PRODUCT ID =", id)
 
         conn.commit()
+        cur.execute("""
+            SELECT stock
+            FROM products
+            WHERE id=%s
+            """,
+            (id,))
+
+        print("NEW STOCK =", cur.fetchone())
 
         cur.close()
         conn.close()
