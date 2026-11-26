@@ -5,15 +5,21 @@
 <div class="container-fluid">
 
     <h1>Inventory Management</h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
+   {% with messages = get_flashed_messages(with_categories=true) %}
 
     {% if messages %}
 
         {% for category, message in messages %}
 
-            <div class="alert alert-{{ category }}">
+            <div class="alert alert-{{ category }} alert-dismissible fade show"
+                 role="alert">
 
                 {{ message }}
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
 
             </div>
 
@@ -23,6 +29,21 @@
 
 {% endwith %}
 
+<script>
+
+setTimeout(function(){
+
+    let alerts = document.querySelectorAll('.alert');
+
+    alerts.forEach(function(alert){
+
+        alert.classList.remove('show');
+
+    });
+
+}, 4000);
+
+</script>
     <br>
     <a href="/products" class="active"></a>
 
