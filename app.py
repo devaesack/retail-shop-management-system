@@ -9,6 +9,7 @@ from flask import (
 )
 from db import get_connection
 from datetime import timedelta
+from datetime import date
 
 from flask import Flask, render_template
 
@@ -392,20 +393,30 @@ def sales_history():
 
     conn = get_connection()
     cur = conn.cursor()
+    selected_date = request.args.get('sale_date')
+    if not selected_date:
+
+     selected_date = date.today().isoformat()
 
     cur.execute("""
-                SELECT s.id,
-                s.customer_name,
-               p.product_name,
-               s.quantity,
-               s.total_amount,
-               s.sale_date
-        FROM sales s
-        JOIN products p
-        ON s.product_id = p.id
-        ORDER BY s.id DESC
-    """)
+       SELECT
+       s.id,
+       s.customer_name,
+       p.product_name,
+       s.quantity,
+       s.total_amount,
+       s.sale_date
 
+       FROM sales s
+
+       JOIN products p
+       ON s.product_id = p.id
+
+       WHERE DATE(s.sale_date) = %s
+
+      ORDER BY s.id DESC
+      """,
+    (selected_date,))
     sales = cur.fetchall()
 
     formatted_sales = []
@@ -429,7 +440,8 @@ def sales_history():
 
     return render_template(
         'sales_history.html',
-        sales=formatted_sales
+        sales=formatted_sales,
+        selected_date=selected_date
     )
 @app.route('/logout')
 def logout():
