@@ -173,46 +173,73 @@
 </tr>
 
 </thead>
-            <tbody>
-                {% for product in products %}
-                <tr>
-                    <td>
-                        <div class="product-name">
-                            <span class="product-dot"></span>
-                            {{ product[1] }}
-                        </div>
-                    </td>
-                    <td class="text-center stock-qty">{{ product[2] }}</td>
-                    <td class="text-center">
-                        {% if product[2]|int <= 10 %}
-                            <span class="badge-critical">Critical</span>
-                        {% else %}
-                            <span class="badge-low">Low</span>
-                        {% endif %}
-                    </td>
-                    <td class="text-center">
+           <tbody>
 
-                    <a
-                     href="/restock/{{ product[0] }}"
-                     class="btn btn-success btn-sm">
+    {% for product in products %}
 
-                     Restock
+    <tr>
 
-                    </a>
+        <td>
+            <div class="product-name">
+                <span class="product-dot"></span>
+                {{ product[0] }}
+            </div>
+        </td>
 
-                    </td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="3">
-                        <div class="empty-state">
-                            <div class="check">✅</div>
-                            <p class="mb-0 mt-2">All products are well stocked.</p>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
+        <td class="text-center stock-qty">
+            {{ product[1] }}
+        </td>
+
+        <td class="text-center">
+
+            {% if product[1]|int <= 10 %}
+                <span class="badge-critical">
+                    Critical
+                </span>
+            {% else %}
+                <span class="badge-low">
+                    Low
+                </span>
+            {% endif %}
+
+        </td>
+
+        <td class="text-center">
+
+            <a href="/products"
+               class="btn btn-sm btn-primary">
+
+                Restock
+
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% else %}
+
+    <tr>
+
+        <td colspan="4">
+
+            <div class="empty-state">
+
+                <div class="check">✅</div>
+
+                <p class="mb-0 mt-2">
+                    All products are well stocked.
+                </p>
+
+            </div>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</tbody>
         </table>
     </div>
 </div>
