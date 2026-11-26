@@ -122,17 +122,57 @@
     <span class="alert-count">{{ products|length }} item{{ 's' if products|length != 1 }} need restocking</span>
 </div>
 
+<div class="row mb-4">
+
+    <div class="col-md-4">
+
+        <div
+        class="card text-white border-0"
+        style="background:
+        linear-gradient(
+        135deg,
+        #dc2626,
+        #b91c1c);">
+
+            <div class="card-body">
+
+                <h6>
+                    Need Restocking
+                </h6>
+
+                <h2>
+
+                    {{ products|length }}
+
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <!-- Table Card -->
 <div class="card stock-card">
     <div class="table-responsive">
         <table class="table stock-table">
             <thead>
-                <tr>
-                    <th>Product</th>
-                    <th class="text-center">Stock</th>
-                    <th class="text-center">Status</th>
-                </tr>
-            </thead>
+
+<tr>
+
+<th>Product</th>
+
+<th class="text-center">Stock</th>
+
+<th class="text-center">Status</th>
+
+<th class="text-center">Action</th>
+
+</tr>
+
+</thead>
             <tbody>
                 {% for product in products %}
                 <tr>
@@ -149,6 +189,16 @@
                         {% else %}
                             <span class="badge-low">Low</span>
                         {% endif %}
+                    </td>
+                    <td class="text-center">
+
+                    <a href="/products"
+                    class="btn btn-sm btn-primary">
+
+                     Restock
+
+                    </a>
+
                     </td>
                 </tr>
                 {% else %}
