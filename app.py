@@ -220,12 +220,32 @@ def delete_product(id):
     conn = get_connection()
     cur = conn.cursor()
 
-    cur.execute(
-        "DELETE FROM products WHERE id=%s",
-        (id,)
-    )
+    try:
 
-    conn.commit()
+        cur.execute(
+            "DELETE FROM products WHERE id=%s",
+            (id,)
+        )
+
+        conn.commit()
+
+    except Exception:
+
+        conn.rollback()
+
+        cur.close()
+        conn.close()
+
+        return """
+        <h3>
+        ⚠ Cannot delete product.
+        Sales history exists for this product.
+        </h3>
+
+        <a href='/products'>
+        Go Back
+        </a>
+        """
 
     cur.close()
     conn.close()
