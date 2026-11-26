@@ -4,7 +4,8 @@ from flask import (
     render_template,
     request,
     redirect,
-    session
+    session,
+    flash
 )
 from db import get_connection
 from datetime import timedelta
@@ -229,26 +230,24 @@ def delete_product(id):
 
         conn.commit()
 
+        flash(
+            "✅ Product deleted successfully.",
+            "success"
+        )
+
     except Exception:
 
         conn.rollback()
 
+        flash(
+            "⚠ Cannot delete this product because sales history exists.",
+            "danger"
+        )
+
+    finally:
+
         cur.close()
         conn.close()
-
-        return """
-        <h3>
-        ⚠ Cannot delete product.
-        Sales history exists for this product.
-        </h3>
-
-        <a href='/products'>
-        Go Back
-        </a>
-        """
-
-    cur.close()
-    conn.close()
 
     return redirect('/products')
 
