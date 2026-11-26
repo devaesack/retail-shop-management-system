@@ -457,7 +457,7 @@ def low_stock():
     cur = conn.cursor()
 
     cur.execute("""
-        SELECT product_name,
+        SELECT id , product_name,
                stock
         FROM products
         WHERE stock <= 50
