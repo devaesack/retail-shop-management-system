@@ -543,6 +543,14 @@ def sales_report():
     conn = get_connection()
     cur = conn.cursor()
 
+    print("START DATE =", start_date)
+    print("END DATE =", end_date)
+
+    cur.close()
+    conn.close()
+
+    return redirect('/dashboard')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
