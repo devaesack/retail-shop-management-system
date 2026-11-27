@@ -43,20 +43,17 @@ body{
 }
 
 .sidebar a{
-    display:block;
-    text-decoration:none;
-    color:#cbd5e1;
-    padding:12px 15px;
-    margin-bottom:10px;
-    border-radius:10px;
-    transition:all .3s ease;
+    display: block;
+    border: none;
+    padding: 0.75rem 1rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    border-radius: 0.5rem;
 }
 
 .sidebar a:hover{
-    background:#2563eb;
-    color:white;
-    transform:translateX(5px);
-}
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;}
 
 .sidebar a.active{
     background:#2563eb;
