@@ -2,72 +2,238 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="min-h-screen bg-slate-100 py-10 px-4 sm:px-6">
 
-<div class="card p-4">
+    <div class="max-w-3xl mx-auto">
 
-<h2>🧾 Point Of Sale</h2>
+        <!-- Page header -->
+        <div class="mb-6">
+            <h1 class="flex items-center gap-3 text-3xl font-bold text-slate-800">
+                <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-2xl">🧾</span>
+                Point Of Sale
+            </h1>
+            <p class="text-sm text-slate-500 mt-1">Create a bill for a customer</p>
+        </div>
 
-<hr>
+        <!-- Form card -->
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
 
-<form method="POST">
+            <!-- Top accent -->
+            <div class="h-1.5 bg-gradient-to-r from-emerald-400 to-green-600"></div>
 
-    <div class="mb-3">
+            <form method="POST" id="billingForm" class="p-8 space-y-6">
 
-    <label>Customer Name</label>
+                <!-- Customer Name -->
+                <div>
+                    <label for="customer_name" class="block text-sm font-semibold text-slate-700 mb-2">
+                        Customer Name
+                    </label>
+                    <input
+                        type="text"
+                        id="customer_name"
+                        name="customer_name"
+                        placeholder="Enter customer name"
+                        required
+                        class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-800
+                               placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200
+                               focus:outline-none transition">
+                </div>
 
-    <input
-    type="text"
-    name="customer_name"
-    class="form-control"
-    required>
+                <!-- Product picker with search -->
+                <div class="relative">
+                    <span class="block text-sm font-semibold text-slate-700 mb-2">Select Product</span>
+
+                    <button
+                        type="button"
+                        id="pickerTrigger"
+                        class="flex w-full items-center justify-between rounded-lg border border-slate-300 bg-white
+                               px-4 py-3 text-left text-slate-800 hover:border-emerald-400 focus:outline-none
+                               focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200 transition">
+                        <span id="pickerLabel" class="truncate">
+                            {% if products %}{{ products[0][1] }}{% else %}No products available{% endif %}
+                        </span>
+                        <svg class="h-5 w-5 flex-shrink-0 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+
+                    <!-- Hidden field that actually gets submitted -->
+                    <input type="hidden" id="product_id" name="product_id"
+                           value="{{ products[0][0] if products else '' }}">
+
+                    <!-- Dropdown panel -->
+                    <div id="pickerPanel"
+                         class="hidden absolute left-0 right-0 z-20 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl">
+
+                        <!-- Search box -->
+                        <div class="relative border-b border-slate-200 p-3">
+                            <span class="pointer-events-none absolute inset-y-0 left-6 flex items-center text-slate-400">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.2-5.2m0 0A7.5 7.5 0 105.6 5.6a7.5 7.5 0 0010.2 10.2z" />
+                                </svg>
+                            </span>
+                            <input
+                                type="text"
+                                id="productSearch"
+                                placeholder="Search product..."
+                                autocomplete="off"
+                                class="w-full rounded-lg border border-slate-300 bg-slate-50 py-2.5 pl-10 pr-4 text-sm
+                                       text-slate-800 placeholder-slate-400 focus:border-emerald-500 focus:bg-white
+                                       focus:ring-2 focus:ring-emerald-200 focus:outline-none transition">
+                        </div>
+
+                        <!-- Options -->
+                        <ul id="productList" class="max-h-64 overflow-y-auto py-1">
+                            {% for product in products %}
+                            <li>
+                                <button
+                                    type="button"
+                                    class="product-option flex w-full items-center justify-between px-4 py-2.5 text-sm
+                                           text-slate-700 hover:bg-emerald-50 transition"
+                                    data-id="{{ product[0] }}"
+                                    data-stock="{{ product[4] }}">
+                                    <span class="font-medium text-slate-800 product-name">{{ product[1] }}</span>
+                                    <span class="text-xs text-slate-500">
+                                        ₹{{ "%.2f"|format(product[3]|float) }} · {{ product[4] }} in stock
+                                    </span>
+                                </button>
+                            </li>
+                            {% endfor %}
+                        </ul>
+
+                        <p id="noMatch" class="hidden px-4 py-8 text-center text-sm text-slate-500">
+                            No products match your search.
+                        </p>
+
+                    </div>
+                </div>
+
+                <!-- Quantity -->
+                <div>
+                    <label for="quantity" class="block text-sm font-semibold text-slate-700 mb-2">
+                        Quantity
+                    </label>
+                    <input
+                        type="number"
+                        id="quantity"
+                        name="quantity"
+                        min="1"
+                        step="1"
+                        placeholder="Enter quantity"
+                        required
+                        class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-800
+                               placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200
+                               focus:outline-none transition">
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-slate-200">
+
+                    <a href="/dashboard"
+                       class="inline-flex justify-center items-center rounded-lg border border-slate-300 bg-white
+                              px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="inline-flex justify-center items-center rounded-lg bg-emerald-600 px-6 py-3
+                               text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
+                               focus:outline-none focus:ring-2 focus:ring-emerald-300 transition">
+                        Generate Bill
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="mb-3">
+<script>
+(function () {
+    var trigger   = document.getElementById('pickerTrigger');
+    var panel     = document.getElementById('pickerPanel');
+    var search    = document.getElementById('productSearch');
+    var label     = document.getElementById('pickerLabel');
+    var hidden    = document.getElementById('product_id');
+    var noMatch   = document.getElementById('noMatch');
+    var options   = Array.prototype.slice.call(document.querySelectorAll('.product-option'));
+    var form      = document.getElementById('billingForm');
 
-<label>Select Product</label>
+    function openPanel() {
+        panel.classList.remove('hidden');
+        search.value = '';
+        filter('');
+        search.focus();
+    }
 
-<select
-name="product_id"
-class="form-select">
+    function closePanel() {
+        panel.classList.add('hidden');
+    }
 
-{% for product in products %}
+    function selectOption(btn) {
+        hidden.value = btn.dataset.id;
+        label.textContent = btn.querySelector('.product-name').textContent;
+        options.forEach(function (o) { o.classList.remove('bg-emerald-100'); });
+        btn.classList.add('bg-emerald-100');
+        closePanel();
+        trigger.focus();
+    }
 
-<option value="{{ product[0] }}">
-{{ product[1] }}
-</option>
+    function filter(query) {
+        var q = query.trim().toLowerCase();
+        var visible = 0;
+        options.forEach(function (btn) {
+            var name = btn.querySelector('.product-name').textContent.toLowerCase();
+            var show = name.indexOf(q) !== -1;
+            btn.parentElement.classList.toggle('hidden', !show);
+            if (show) visible++;
+        });
+        noMatch.classList.toggle('hidden', visible !== 0);
+        return visible;
+    }
 
-{% endfor %}
+    trigger.addEventListener('click', function (e) {
+        e.stopPropagation();
+        panel.classList.contains('hidden') ? openPanel() : closePanel();
+    });
 
-</select>
+    options.forEach(function (btn) {
+        btn.addEventListener('click', function () { selectOption(btn); });
+    });
 
-</div>
+    search.addEventListener('input', function () {
+        filter(search.value);
+    });
 
-<div class="mb-3">
+    search.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            var first = options.find(function (btn) {
+                return btn.parentElement.classList.contains('hidden') === false;
+            });
+            if (first) selectOption(first);
+        } else if (e.key === 'Escape') {
+            closePanel();
+            trigger.focus();
+        }
+    });
 
-<label>Quantity</label>
+    panel.addEventListener('click', function (e) { e.stopPropagation(); });
 
-<input
-type="number"
-name="quantity"
-class="form-control"
-min="1"
-required>
+    document.addEventListener('click', closePanel);
 
-</div>
-
-<button
-class="btn btn-success">
-
-Generate Bill
-
-</button>
-
-</form>
-
-</div>
-
-</div>
+    form.addEventListener('submit', function (e) {
+        if (!hidden.value) {
+            e.preventDefault();
+            openPanel();
+        }
+    });
+})();
+</script>
 
 {% endblock %}
