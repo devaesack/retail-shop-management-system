@@ -144,7 +144,27 @@
 
 </div>
 
+<!-- report card  -->
 
+  <div class="report-card">
+
+    <h2>📊 Sales Report</h2>
+
+    <form action="/sales_report" method="POST">
+
+        <label>Start Date</label>
+        <input type="date" name="start_date" required>
+
+        <label>End Date</label>
+        <input type="date" name="end_date" required>
+
+        <button type="submit">
+            Generate Report
+        </button>
+
+    </form>
+
+</div>
 
 
 {% endblock %}

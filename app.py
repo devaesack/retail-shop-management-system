@@ -534,6 +534,14 @@ def restock(id):
         product=product,
         product_id=id
     )
+@app.route('/sales_report', methods=['POST'])
+def sales_report():
+
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+
+    conn = get_connection()
+    cur = conn.cursor()
 
 
 if __name__ == '__main__':
