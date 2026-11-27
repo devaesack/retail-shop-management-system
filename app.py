@@ -84,6 +84,15 @@ def dashboard():
     # Total Products
     cur.execute("SELECT COUNT(*) FROM products")
     total_products = cur.fetchone()[0]
+    # Healthy Products
+    cur.execute("""
+        SELECT COUNT(*)
+        FROM products
+        WHERE stock > 50
+        """)
+
+    healthy_products = cur.fetchone()[0]
+ 
 
     # Total Stock
     cur.execute("SELECT SUM(stock) FROM products")
@@ -92,6 +101,14 @@ def dashboard():
     # Low Stock Items
     cur.execute("SELECT COUNT(*) FROM products WHERE stock < 50")
     low_stock = cur.fetchone()[0]
+    # Out Of Stock Products
+    cur.execute("""
+        SELECT COUNT(*)
+        FROM products
+        WHERE stock = 0
+        """)
+
+    out_of_stock = cur.fetchone()[0]
     cur.execute("""
         SELECT product_name, stock
         FROM products
@@ -145,8 +162,10 @@ def dashboard():
     return render_template(
         'dashboard.html',
         total_products=total_products,
+        healthy_products=healthy_products,
         total_stock=total_stock,
         low_stock=low_stock,
+        out_of_stock=out_of_stock,
         total_sales=total_sales,
         low_stock_products=low_stock_products,
         total_revenue=total_revenue,

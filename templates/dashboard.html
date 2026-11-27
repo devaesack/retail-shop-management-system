@@ -10,10 +10,12 @@
         min-height: 150px;
         transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
+
     .dash-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
     }
+
     .dash-label {
         font-size: 0.85rem;
         text-transform: uppercase;
@@ -21,15 +23,18 @@
         opacity: 0.9;
         margin-bottom: 0.25rem;
     }
+
     .dash-value {
         font-size: 2rem;
         font-weight: 700;
         margin-bottom: 0;
     }
+
     .dash-icon {
         font-size: 1.5rem;
         opacity: 0.85;
     }
+
     .dash-btn {
         align-self: flex-start;
         margin-top: auto;
@@ -48,7 +53,7 @@
 
 <!-- Row 1: Key stats -->
 <div class="row g-3">
-   <!--Total Products -->
+    <!--Total Products -->
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="card dash-card shadow-sm h-100" style="background: linear-gradient(135deg, #2563eb, #1d4ed8);">
             <div class="card-body d-flex flex-column">
@@ -60,19 +65,28 @@
             </div>
         </div>
     </div>
-  <!--Total Stock  -->
-    <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card dash-card shadow-sm h-100" style="background: linear-gradient(135deg, #16a34a, #15803d);">
-            <div class="card-body d-flex flex-column">
-                <div class="d-flex justify-content-between align-items-start">
-                    <span class="dash-label">Total Stock</span>
-                    <span class="dash-icon">🗂️</span>
-                </div>
-                <p class="dash-value">{{ total_stock }}</p>
-            </div>
-        </div>
+    <!--Total Stock  -->
+    <div class="card">
+
+        <h3>📦 Inventory Health</h3>
+
+        <p>
+            Healthy :
+            {{ healthy_products }}
+        </p>
+
+        <p>
+            Low Stock :
+            {{ low_stock_count }}
+        </p>
+
+        <p>
+            Out Of Stock :
+            {{ out_of_stock }}
+        </p>
+
     </div>
-  <!-- Low Stock -->
+    <!-- Low Stock -->
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="card dash-card shadow-sm h-100" style="background: linear-gradient(135deg, #dc2626, #b91c1c);">
             <div class="card-body d-flex flex-column">
@@ -85,9 +99,10 @@
             </div>
         </div>
     </div>
-<!-- Total Sales  -->
+    <!-- Total Sales  -->
     <div class="col-12 col-sm-6 col-xl-3">
-        <div class="card dash-card shadow-sm h-100" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #1f2937;">
+        <div class="card dash-card shadow-sm h-100"
+            style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #1f2937;">
             <div class="card-body d-flex flex-column">
                 <div class="d-flex justify-content-between align-items-start">
                     <span class="dash-label">Total Sales</span>
@@ -103,7 +118,7 @@
 
 <!-- Row 2: Performance -->
 <div class="row g-3 mt-1">
- <!-- Total Revenue -->
+    <!-- Total Revenue -->
     <div class="col-12 col-md-4">
         <div class="card dash-card shadow-sm h-100" style="background: linear-gradient(135deg, #059669, #047857);">
             <div class="card-body d-flex flex-column">
@@ -115,7 +130,7 @@
             </div>
         </div>
     </div>
-<!-- Today's sales  -->
+    <!-- Today's sales  -->
     <div class="col-12 col-md-4">
         <div class="card dash-card shadow-sm h-100" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
             <div class="card-body d-flex flex-column">
@@ -127,7 +142,7 @@
             </div>
         </div>
     </div>
-<!-- Top product  -->
+    <!-- Top product  -->
     <div class="col-12 col-md-4">
         <div class="card dash-card shadow-sm h-100" style="background: linear-gradient(135deg, #1f2937, #111827);">
             <div class="card-body d-flex flex-column">
@@ -146,7 +161,7 @@
 
 <!-- report card  -->
 
-  <div class="report-card">
+<div class="report-card">
 
     <h2>📊 Sales Report</h2>
 
