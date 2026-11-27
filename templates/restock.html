@@ -2,51 +2,149 @@
 
 {% block content %}
 
-<h3>🔄 Restock Product</h3>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<br>
+<div class="min-h-screen bg-slate-100 py-10 px-4 sm:px-6">
 
-<div class="card p-4">
+    <div class="max-w-2xl mx-auto">
 
+        <!-- Page header -->
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-100 text-2xl">
+                    🔄
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">Restock Product</h1>
+                    <p class="text-sm text-slate-500">Add new stock to this product</p>
+                </div>
+            </div>
 
-    <p>
+            <a href="/products"
+               class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">
+                ← Back to Products
+            </a>
+        </div>
 
-        <strong>Product:</strong>
+        <!-- Card -->
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
 
-        {{ product[0] }}
+            <!-- Top accent -->
+            <div class="h-1.5 bg-gradient-to-r from-emerald-400 to-green-600"></div>
 
-    </p>
+            <div class="p-8">
 
-    <p>
+                <!-- Product info -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
 
-        <strong>Current Stock:</strong>
+                    <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Product</p>
+                        <p class="mt-1 text-lg font-bold text-slate-800">{{ product[1] }}</p>
+                    </div>
 
-        {{ product[1] }}
+                    <div class="rounded-xl bg-slate-50 border border-slate-200 p-4">
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Current Stock</p>
+                        <p class="mt-1 text-lg font-bold text-slate-800" id="current-stock">{{ product[4] }}</p>
+                    </div>
 
-    </p>
+                </div>
 
-    
-    <form method="POST">
+                <!-- Restock form -->
+                <form method="POST" id="restockForm" class="space-y-6">
 
-        <label>Add Stock</label>
+                    <div>
+                        <label for="quantity" class="block text-sm font-semibold text-slate-700 mb-2">
+                            Quantity to Add
+                        </label>
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            min="1"
+                            step="1"
+                            placeholder="Enter quantity"
+                            required
+                            class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-800
+                                   placeholder-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200
+                                   focus:outline-none transition">
+                        <p id="quantity-error" class="hidden mt-2 text-sm text-red-600">
+                            Please enter a whole number greater than 0.
+                        </p>
+                    </div>
 
-        <input
-            type="number"
-            name="quantity"
-            class="form-control"
-            required>
+                    <!-- Preview of new stock -->
+                    <div class="flex items-center justify-between rounded-xl bg-emerald-50 border border-emerald-200 px-5 py-4">
+                        <span class="text-sm font-medium text-emerald-800">New stock after restock</span>
+                        <span id="new-stock" class="text-2xl font-bold text-emerald-700">{{ product[4] }}</span>
+                    </div>
 
-        <br>
+                    <!-- Actions -->
+                    <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-slate-200">
 
-        <button
-            class="btn btn-success">
+                        <a href="/products"
+                           class="inline-flex justify-center items-center rounded-lg border border-slate-300 bg-white
+                                  px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
+                            Cancel
+                        </a>
 
-            Update Stock
+                        <button
+                            type="submit"
+                            class="inline-flex justify-center items-center rounded-lg bg-emerald-600 px-6 py-3
+                                   text-sm font-semibold text-white shadow-sm hover:bg-emerald-700
+                                   focus:outline-none focus:ring-2 focus:ring-emerald-300 transition">
+                            Update Stock
+                        </button>
 
-        </button>
+                    </div>
 
-    </form>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
 
 </div>
+
+<script>
+    (function () {
+        var currentStock = parseInt(document.getElementById('current-stock').textContent, 10) || 0;
+        var input = document.getElementById('quantity');
+        var newStock = document.getElementById('new-stock');
+        var error = document.getElementById('quantity-error');
+        var form = document.getElementById('restockForm');
+
+        input.addEventListener('input', function () {
+            var qty = parseInt(input.value, 10);
+
+            if (isNaN(qty)) {
+                newStock.textContent = currentStock;
+                error.classList.add('hidden');
+                input.classList.remove('border-red-400');
+                return;
+            }
+
+            if (qty < 1) {
+                error.classList.remove('hidden');
+                input.classList.add('border-red-400');
+                newStock.textContent = currentStock;
+            } else {
+                error.classList.add('hidden');
+                input.classList.remove('border-red-400');
+                newStock.textContent = currentStock + qty;
+            }
+        });
+
+        form.addEventListener('submit', function (e) {
+            var qty = parseInt(input.value, 10);
+            if (isNaN(qty) || qty < 1) {
+                e.preventDefault();
+                error.classList.remove('hidden');
+                input.classList.add('border-red-400');
+                input.focus();
+            }
+        });
+    })();
+</script>
 
 {% endblock %}
