@@ -40,6 +40,31 @@
         <p>{{ products_sold }}</p>
 
     </div>
+     <div class="bg-white rounded-xl p-6 shadow mt-8">
+
+    <h2>🏆 Top Selling Products</h2>
+
+<table class="report-table">
+
+    <tr>
+        <th>Product</th>
+        <th>Quantity Sold</th>
+    </tr>
+
+    {% for product in top_products %}
+
+    <tr>
+        <td>{{ product[0] }}</td>
+        <td>{{ product[1] }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+    
+
+</div>
 
     <br>
 

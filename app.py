@@ -556,6 +556,25 @@ def sales_report():
 
     report = cur.fetchone()
 
+    cur.execute("""
+        SELECT
+        p.product_name,
+       SUM(s.quantity) as total_sold
+       FROM sales s
+       JOIN products p
+       ON s.product_id = p.id
+       WHERE DATE(s.sale_date)
+      BETWEEN %s AND %s
+     GROUP BY p.product_name
+     ORDER BY total_sold DESC
+     LIMIT 5
+     """,
+    (start_date, end_date))
+
+    top_products = cur.fetchall()
+
+    
+
     revenue = report[0]
     total_bills = report[1]
     products_sold = report[2]
@@ -567,6 +586,7 @@ def sales_report():
         "sales_report.html",
         revenue=revenue,
         total_bills=total_bills,
+        top_products=top_products,
         products_sold=products_sold,
         start_date=start_date,
         end_date=end_date
