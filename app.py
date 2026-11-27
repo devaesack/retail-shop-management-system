@@ -579,6 +579,11 @@ def sales_report():
     total_bills = report[1]
     products_sold = report[2]
 
+    if total_bills > 0:
+     average_bill = revenue / total_bills
+    else:
+     average_bill = 0
+
     cur.close()
     conn.close()
 
@@ -589,7 +594,8 @@ def sales_report():
         top_products=top_products,
         products_sold=products_sold,
         start_date=start_date,
-        end_date=end_date
+        end_date=end_date,
+        average_bill=round(average_bill, 2)
     )
 
 

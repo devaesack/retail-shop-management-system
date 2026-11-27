@@ -1,78 +1,93 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Sales Report</title>
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>📊 Sales Report</h1>
+        <h1>📊 Sales Report</h1>
 
-    <h3>
-        {{ start_date }}
-        to
-        {{ end_date }}
-    </h3>
+        <h3>
+            {{ start_date }}
+            to
+            {{ end_date }}
+        </h3>
 
-    <div class="report-box">
+        <div class="report-box">
 
-        <h2>Total Revenue</h2>
+            <h2>Total Revenue</h2>
 
-        <p>₹{{ revenue }}</p>
+            <p>₹{{ revenue }}</p>
+
+        </div>
+
+        <div class="report-box">
+
+            <h2>Total Bills</h2>
+
+            <p>{{ total_bills }}</p>
+
+        </div>
+
+        <div class="report-box">
+
+            <h2>Products Sold</h2>
+
+            <p>{{ products_sold }}</p>
+
+        </div>
+
+        <div class="report-box">
+
+            <h2>
+                Average Bill Value
+            </h2>
+
+            <p>
+                ₹{{ average_bill }}
+            </p>
+
+        </div>
+
+        <div class="bg-white rounded-xl p-6 shadow mt-8">
+
+            <h2>🏆 Top Selling Products</h2>
+
+            <table class="report-table">
+
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity Sold</th>
+                </tr>
+
+                {% for product in top_products %}
+
+                <tr>
+                    <td>{{ product[0] }}</td>
+                    <td>{{ product[1] }}</td>
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+
+
+        </div>
+
+        <br>
+
+        <a href="/dashboard">
+            Back to Dashboard
+        </a>
 
     </div>
-
-    <div class="report-box">
-
-        <h2>Total Bills</h2>
-
-        <p>{{ total_bills }}</p>
-
-    </div>
-
-    <div class="report-box">
-
-        <h2>Products Sold</h2>
-
-        <p>{{ products_sold }}</p>
-
-    </div>
-     <div class="bg-white rounded-xl p-6 shadow mt-8">
-
-    <h2>🏆 Top Selling Products</h2>
-
-<table class="report-table">
-
-    <tr>
-        <th>Product</th>
-        <th>Quantity Sold</th>
-    </tr>
-
-    {% for product in top_products %}
-
-    <tr>
-        <td>{{ product[0] }}</td>
-        <td>{{ product[1] }}</td>
-    </tr>
-
-    {% endfor %}
-
-</table>
-
-    
-
-</div>
-
-    <br>
-
-    <a href="/dashboard">
-        Back to Dashboard
-    </a>
-
-</div>
 
 </body>
+
 </html>
