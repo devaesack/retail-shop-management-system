@@ -2,53 +2,66 @@
 
 {% block content %}
 
-<div class="container">
+<div class="min-h-[70vh] flex items-center justify-center">
 
-    <div class="card p-4">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
 
-        <h2 class="text-success">
-            ✅ Sale Recorded Successfully
-        </h2>
+        <!-- Top accent -->
+        <div class="h-1.5 bg-gradient-to-r from-emerald-400 to-green-600"></div>
 
-        <hr>
+        <div class="p-8 text-center">
 
-        <p>
-            <strong>Customer:</strong>
-            {{ customer_name }}
-        </p>
+            <!-- Success icon -->
+            <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-3xl">
+                ✅
+            </div>
 
-        <p>
-            <strong>Product:</strong>
-            {{ product_name }}
-        </p>
+            <h1 class="mt-4 text-2xl font-bold text-slate-800">Sale Recorded Successfully</h1>
+            <p class="mt-1 text-sm text-slate-500">The transaction has been saved to sales history.</p>
 
-        <p>
-            <strong>Quantity:</strong>
-            {{ quantity }}
-        </p>
+            <!-- Receipt details -->
+            <div class="mt-6 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-slate-50 text-left">
 
-        <p>
-            <strong>Total Amount:</strong>
-            ₹{{ total_amount }}
-        </p>
+                <div class="flex items-center justify-between px-5 py-3">
+                    <span class="text-sm text-slate-500">Customer</span>
+                    <span class="text-sm font-semibold text-slate-800">{{ customer_name }}</span>
+                </div>
 
-        <br>
+                <div class="flex items-center justify-between px-5 py-3">
+                    <span class="text-sm text-slate-500">Product</span>
+                    <span class="text-sm font-semibold text-slate-800">{{ product_name }}</span>
+                </div>
 
-        <a
-        href="/billing"
-        class="btn btn-primary">
+                <div class="flex items-center justify-between px-5 py-3">
+                    <span class="text-sm text-slate-500">Quantity</span>
+                    <span class="text-sm font-semibold text-slate-800">{{ quantity }}</span>
+                </div>
 
-        New Bill
+                <div class="flex items-center justify-between px-5 py-3">
+                    <span class="text-sm font-medium text-slate-600">Total Amount</span>
+                    <span class="text-lg font-bold text-emerald-600">₹{{ "%.2f"|format(total_amount|float) }}</span>
+                </div>
 
-        </a>
+            </div>
 
-        <a
-        href="/sales_history"
-        class="btn btn-success mt-3">
+            <!-- Actions -->
+            <div class="mt-6 flex flex-col gap-3">
 
-        Sales History
+                <a href="/billing"
+                   class="inline-flex w-full items-center justify-center rounded-lg bg-blue-600 px-5 py-3
+                          text-sm font-semibold text-white shadow-sm hover:bg-blue-700 transition">
+                    New Bill
+                </a>
 
-        </a>
+                <a href="/sales_history"
+                   class="inline-flex w-full items-center justify-center rounded-lg border border-slate-300 bg-white
+                          px-5 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
+                    View Sales History
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
