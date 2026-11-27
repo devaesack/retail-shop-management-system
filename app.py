@@ -120,13 +120,6 @@ def dashboard():
 
     top_product = cur.fetchone()
 
-    cur.execute("""
-        SELECT COUNT(*)
-        FROM products
-        WHERE stock <= 50
-        """)
-
-    low_stock_count = cur.fetchone()[0]
 
     cur.execute("""
     SELECT
@@ -160,7 +153,7 @@ def dashboard():
         today_sales=today_sales,
         top_product=top_product,
         recent_sales=recent_sales,
-        low_stock_count=low_stock_count
+        
     )
 @app.route('/products')
 def products():
