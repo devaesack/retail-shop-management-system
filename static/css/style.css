@@ -276,6 +276,23 @@ label{
     box-shadow:0 5px 15px rgba(0,0,0,.08);
 }
 
+.warning-card{
+    background:#fff3cd;
+    border-left:6px solid orange;
+    padding:20px;
+    margin:15px;
+    border-radius:10px;
+}
+
+.warning-card h3{
+    color:#856404;
+}
+
+.warning-card a{
+    display:inline-block;
+    margin-top:10px;
+}
+
 
 
 /* =========================
