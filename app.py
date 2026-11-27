@@ -543,13 +543,34 @@ def sales_report():
     conn = get_connection()
     cur = conn.cursor()
 
-    print("START DATE =", start_date)
-    print("END DATE =", end_date)
+    cur.execute("""
+        SELECT
+            COALESCE(SUM(total_amount),0),
+            COUNT(*),
+            COALESCE(SUM(quantity),0)
+        FROM sales
+        WHERE DATE(sale_date)
+        BETWEEN %s AND %s
+    """,
+    (start_date, end_date))
+
+    report = cur.fetchone()
+
+    revenue = report[0]
+    total_bills = report[1]
+    products_sold = report[2]
 
     cur.close()
     conn.close()
 
-    return redirect('/dashboard')
+    return render_template(
+        "sales_report.html",
+        revenue=revenue,
+        total_bills=total_bills,
+        products_sold=products_sold,
+        start_date=start_date,
+        end_date=end_date
+    )
 
 
 if __name__ == '__main__':

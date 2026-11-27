@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Report</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>📊 Sales Report</h1>
+
+    <h3>
+        {{ start_date }}
+        to
+        {{ end_date }}
+    </h3>
+
+    <div class="report-box">
+
+        <h2>Total Revenue</h2>
+
+        <p>₹{{ revenue }}</p>
+
+    </div>
+
+    <div class="report-box">
+
+        <h2>Total Bills</h2>
+
+        <p>{{ total_bills }}</p>
+
+    </div>
+
+    <div class="report-box">
+
+        <h2>Products Sold</h2>
+
+        <p>{{ products_sold }}</p>
+
+    </div>
+
+    <br>
+
+    <a href="/dashboard">
+        Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>
