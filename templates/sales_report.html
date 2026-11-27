@@ -1,107 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Report</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="min-h-screen bg-slate-100 text-slate-800 antialiased">
 
-    <div class="container">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
 
-        <h1>📊 Sales Report</h1>
+        <!-- Header -->
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900">📊 Sales Report</h1>
+                <p class="mt-1 text-sm text-slate-500">
+                    Period: <span class="font-medium text-slate-700">{{ start_date }}</span>
+                    to <span class="font-medium text-slate-700">{{ end_date }}</span>
+                </p>
+            </div>
 
-        <h3>
-            {{ start_date }}
-            to
-            {{ end_date }}
-        </h3>
+            <a href="/dashboard"
+               class="inline-flex items-center gap-1 text-sm font-medium text-slate-600 hover:text-slate-900 transition">
+                ← Back to Dashboard
+            </a>
+        </div>
 
-        <div class="report-box">
+        <!-- Summary stats -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
 
-            <h2>Total Revenue</h2>
+            <div class="rounded-xl bg-white border border-slate-200 shadow-sm p-5">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Revenue</p>
+                <p class="mt-2 text-xl font-bold text-emerald-600">₹{{ "%.2f"|format(revenue|float) }}</p>
+            </div>
 
-            <p>₹{{ revenue }}</p>
+            <div class="rounded-xl bg-white border border-slate-200 shadow-sm p-5">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Bills</p>
+                <p class="mt-2 text-xl font-bold text-slate-800">{{ total_bills }}</p>
+            </div>
+
+            <div class="rounded-xl bg-white border border-slate-200 shadow-sm p-5">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Products Sold</p>
+                <p class="mt-2 text-xl font-bold text-slate-800">{{ products_sold }}</p>
+            </div>
+
+            <div class="rounded-xl bg-white border border-slate-200 shadow-sm p-5">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">Average Bill</p>
+                <p class="mt-2 text-xl font-bold text-slate-800">₹{{ "%.2f"|format(average_bill|float) }}</p>
+            </div>
 
         </div>
 
-        <div class="report-box">
+        <!-- Best customer + top products -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6">
 
-            <h2>Total Bills</h2>
+            <!-- Best customer -->
+            <div class="rounded-xl bg-white border border-slate-200 shadow-sm p-5">
+                <p class="text-xs font-semibold uppercase tracking-wider text-slate-500">👑 Best Customer</p>
+                <p class="mt-2 text-lg font-bold text-slate-800">{{ customer_name }}</p>
+                <p class="text-sm text-slate-500">₹{{ "%.2f"|format(customer_amount|float) }} spent</p>
+            </div>
 
-            <p>{{ total_bills }}</p>
+            <!-- Top selling products -->
+            <div class="lg:col-span-2 rounded-xl bg-white border border-slate-200 shadow-sm overflow-hidden">
 
-        </div>
+                <div class="px-5 py-4 border-b border-slate-200">
+                    <h2 class="text-sm font-semibold text-slate-800">🏆 Top Selling Products</h2>
+                </div>
 
-        <div class="report-box">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500">Product</th>
+                                <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">Quantity Sold</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100">
+                            {% for product in top_products %}
+                            <tr class="hover:bg-slate-50 transition">
+                                <td class="px-5 py-3 text-sm font-medium text-slate-800">{{ product[0] }}</td>
+                                <td class="px-5 py-3 text-sm text-right text-slate-700">{{ product[1] }}</td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="2" class="px-5 py-8 text-center text-sm text-slate-500">
+                                    No products sold in this period.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
 
-            <h2>Products Sold</h2>
-
-            <p>{{ products_sold }}</p>
-
-        </div>
-
-        <div class="report-box">
-
-            <h2>
-                Average Bill Value
-            </h2>
-
-            <p>
-                ₹{{ average_bill }}
-            </p>
-
-        </div>
-
-        <div class="report-box">
-
-            <h2>👑 Best Customer</h2>
-
-            <p>
-                {{ customer_name }}
-            </p>
-
-            <p>
-                ₹{{ customer_amount }}
-            </p>
-
-        </div>
-
-        <div class="bg-white rounded-xl p-6 shadow mt-8">
-
-            <h2>🏆 Top Selling Products</h2>
-
-            <table class="report-table">
-
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity Sold</th>
-                </tr>
-
-                {% for product in top_products %}
-
-                <tr>
-                    <td>{{ product[0] }}</td>
-                    <td>{{ product[1] }}</td>
-                </tr>
-
-                {% endfor %}
-
-            </table>
-
-
+            </div>
 
         </div>
-
-        <br>
-
-        <a href="/dashboard">
-            Back to Dashboard
-        </a>
 
     </div>
 
 </body>
-
 </html>
