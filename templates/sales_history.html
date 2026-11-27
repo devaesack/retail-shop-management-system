@@ -2,80 +2,107 @@
 
 {% block content %}
 
-<h2>Sales History</h2>
-<form method="GET">
+<div class="min-h-screen bg-slate-100 py-10 px-4 sm:px-6">
 
-    <div class="row mb-3">
+    <div class="max-w-6xl mx-auto">
 
-        <div class="col-md-4">
-
-            <input
-                type="date"
-                name="sale_date"
-                value="{{ selected_date }}"
-                class="form-control">
-
+        <!-- Page header -->
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-800">Sales History</h1>
+                <p class="text-sm text-slate-500 mt-1">
+                    {{ sales|length }} sale{{ 's' if sales|length != 1 }} on the selected date
+                </p>
+            </div>
         </div>
 
-        <div class="col-md-2">
+        <!-- Date filter -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 mb-6">
+            <form method="GET" class="flex flex-col gap-3 sm:flex-row sm:items-end">
 
-            <button
-                class="btn btn-primary">
+                <div class="flex-1">
+                    <label for="sale_date" class="block text-sm font-semibold text-slate-700 mb-2">
+                        Select Date
+                    </label>
+                    <input
+                        type="date"
+                        id="sale_date"
+                        name="sale_date"
+                        value="{{ selected_date }}"
+                        class="w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-800
+                               focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:outline-none transition">
+                </div>
 
-                Search
+                <button type="submit"
+                        class="inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-2.5
+                               text-sm font-semibold text-white shadow-sm hover:bg-blue-700
+                               focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                    Search
+                </button>
 
-            </button>
+            </form>
+        </div>
+
+        <!-- Sales table -->
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-slate-200">
+
+                    <thead class="bg-slate-900">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-300">ID</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-300">Customer</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-300">Product</th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold uppercase tracking-wider text-slate-300">Quantity</th>
+                            <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-300">Total Amount</th>
+                            <th class="px-6 py-4 text-right text-xs font-semibold uppercase tracking-wider text-slate-300">Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-slate-100">
+                        {% for sale in sales %}
+                        <tr class="hover:bg-slate-50 transition">
+
+                            <td class="px-6 py-4 text-sm text-slate-500">{{ sale[0] }}</td>
+
+                            <td class="px-6 py-4 text-sm font-semibold text-slate-800">{{ sale[1] }}</td>
+
+                            <td class="px-6 py-4 text-sm text-slate-600">
+                                <span class="inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
+                                    {{ sale[2] }}
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-4 text-center">
+                                <span class="inline-flex min-w-[2.5rem] justify-center rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+                                    {{ sale[3] }}
+                                </span>
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-right font-semibold text-emerald-700">
+                                ₹{{ "%.2f"|format(sale[4]) }}
+                            </td>
+
+                            <td class="px-6 py-4 text-sm text-right text-slate-500">{{ sale[5] }}</td>
+
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="px-6 py-12 text-center text-sm text-slate-500">
+                                No sales recorded for this date.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
 
         </div>
 
     </div>
 
-</form>
-
-<br>
-
-<table
-class="table table-bordered table-striped table-hover">
-
-<thead>
-
-<tr class="table-dark">
-
-<th>ID</th>
-<th>Customer</th>
-<th>Product</th>
-<th>Quantity</th>
-<th>Total Amount</th>
-<th>Date</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-{% for sale in sales %}
-
-<tr>
-
-    <td>{{ sale[0] }}</td>
-
-    <td>{{ sale[1] }}</td>
-
-    <td>{{ sale[2] }}</td>
-
-    <td>{{ sale[3] }}</td>
-
-    <td>₹{{ sale[4] }}</td>
-
-    <td>{{ sale[5] }}</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
+</div>
 
 {% endblock %}
