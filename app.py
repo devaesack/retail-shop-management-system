@@ -588,6 +588,16 @@ LIMIT 1
 """,
 (start_date, end_date))
     best_customer = cur.fetchone()
+    print("BEST CUSTOMER =", best_customer)
+
+    customer_name = "No Customer"
+    customer_amount = 0
+
+    if best_customer:
+
+       customer_name = best_customer[0]
+       customer_amount = best_customer[1]
+    
 
     
 
@@ -599,16 +609,8 @@ LIMIT 1
      average_bill = revenue / total_bills
     else:
      average_bill = 0
-     if best_customer:
-
-      customer_name = best_customer[0]
-      customer_amount = best_customer[1]
-
-     else:
-
-      customer_name = "No Customer"
-      customer_amount = 0
-
+     
+     
 
     cur.close()
     conn.close()
