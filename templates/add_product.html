@@ -2,81 +2,124 @@
 
 {% block content %}
 
-<div class="container-fluid">
+<div class="min-h-screen bg-slate-100 py-10 px-4 sm:px-6">
 
-    <div class="card p-4">
+    <div class="max-w-3xl mx-auto">
 
-        <h2>Add New Product</h2>
-
-        <hr>
-
-        <form method="POST">
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Product Name
-                </label>
-
-                <input
-                type="text"
-                name="product_name"
-                class="form-control"
-                required>
-
+        <!-- Page header -->
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-800">Add New Product</h1>
+                <p class="text-sm text-slate-500 mt-1">Fill in the details to add a product to inventory</p>
             </div>
 
-            <div class="mb-3">
+            <a href="/products"
+               class="text-sm font-medium text-slate-600 hover:text-slate-900 transition">
+                ← Back to Products
+            </a>
+        </div>
 
-                <label class="form-label">
-                    Category
-                </label>
+        <!-- Form card -->
+        <div class="bg-white rounded-2xl shadow-md border border-slate-200 overflow-hidden">
 
-                <input
-                type="text"
-                name="category"
-                class="form-control"
-                required>
+            <!-- Top accent -->
+            <div class="h-1.5 bg-gradient-to-r from-blue-500 to-indigo-600"></div>
 
-            </div>
+            <form method="POST" class="p-8 space-y-6">
 
-            <div class="mb-3">
+                <!-- Product Name -->
+                <div>
+                    <label for="product_name" class="block text-sm font-semibold text-slate-700 mb-2">
+                        Product Name
+                    </label>
+                    <input
+                        type="text"
+                        id="product_name"
+                        name="product_name"
+                        placeholder="e.g. Rice Bag"
+                        required
+                        class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-800
+                               placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+                               focus:outline-none transition">
+                </div>
 
-                <label class="form-label">
-                    Price
-                </label>
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block text-sm font-semibold text-slate-700 mb-2">
+                        Category
+                    </label>
+                    <input
+                        type="text"
+                        id="category"
+                        name="category"
+                        placeholder="e.g. Groceries"
+                        required
+                        class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-800
+                               placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+                               focus:outline-none transition">
+                </div>
 
-                <input
-                type="number"
-                step="0.01"
-                name="price"
-                class="form-control"
-                required>
+                <!-- Price & Stock -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-            </div>
+                    <div>
+                        <label for="price" class="block text-sm font-semibold text-slate-700 mb-2">
+                            Price (₹)
+                        </label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            step="0.01"
+                            min="0"
+                            placeholder="0.00"
+                            required
+                            class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-800
+                                   placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+                                   focus:outline-none transition">
+                    </div>
 
-            <div class="mb-3">
+                    <div>
+                        <label for="stock" class="block text-sm font-semibold text-slate-700 mb-2">
+                            Stock
+                        </label>
+                        <input
+                            type="number"
+                            id="stock"
+                            name="stock"
+                            min="0"
+                            step="1"
+                            placeholder="0"
+                            required
+                            class="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-slate-800
+                                   placeholder-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200
+                                   focus:outline-none transition">
+                    </div>
 
-                <label class="form-label">
-                    Stock
-                </label>
+                </div>
 
-                <input
-                type="number"
-                name="stock"
-                class="form-control"
-                required>
+                <!-- Actions -->
+                <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-4 border-t border-slate-200">
 
-            </div>
+                    <a href="/products"
+                       class="inline-flex justify-center items-center rounded-lg border border-slate-300 bg-white
+                              px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
+                        Cancel
+                    </a>
 
-            <button
-            class="btn btn-primary">
+                    <button
+                        type="submit"
+                        class="inline-flex justify-center items-center rounded-lg bg-blue-600 px-6 py-3
+                               text-sm font-semibold text-white shadow-sm hover:bg-blue-700
+                               focus:outline-none focus:ring-2 focus:ring-blue-300 transition">
+                        Add Product
+                    </button>
 
-            Add Product
+                </div>
 
-            </button>
+            </form>
 
-        </form>
+        </div>
 
     </div>
 
