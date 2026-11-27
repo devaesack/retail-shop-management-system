@@ -573,6 +573,22 @@ def sales_report():
 
     top_products = cur.fetchall()
 
+    cur.execute("""
+SELECT
+    customer_name,
+    SUM(total_amount) as total_spent
+FROM sales
+WHERE DATE(sale_date)
+BETWEEN %s AND %s
+AND customer_name IS NOT NULL
+AND customer_name <> ''
+GROUP BY customer_name
+ORDER BY total_spent DESC
+LIMIT 1
+""",
+(start_date, end_date))
+    best_customer = cur.fetchone()
+
     
 
     revenue = report[0]
@@ -583,6 +599,16 @@ def sales_report():
      average_bill = revenue / total_bills
     else:
      average_bill = 0
+     if best_customer:
+
+      customer_name = best_customer[0]
+      customer_amount = best_customer[1]
+
+     else:
+
+      customer_name = "No Customer"
+      customer_amount = 0
+
 
     cur.close()
     conn.close()
@@ -595,7 +621,9 @@ def sales_report():
         products_sold=products_sold,
         start_date=start_date,
         end_date=end_date,
-        average_bill=round(average_bill, 2)
+        average_bill=round(average_bill, 2),
+        customer_name=customer_name,
+        customer_amount=customer_amount
     )
 
 
